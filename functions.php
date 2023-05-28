@@ -54,5 +54,24 @@ function get_item_name($dbconnect, $table, $column, $ID)
 	return $find_rs;
 }
 
+// entity is subject / full name of author
+function autocomplete_list($dbconnect, $item_sql, $entity)    
+{
+// Get entity / topic list from database
+$all_items_query = mysqli_query($dbconnect, $item_sql);
+$all_items_rs = mysqli_fetch_assoc($all_items_query); 
+    
+// Make item arrays for autocomplete functionality...
+while($row=mysqli_fetch_array($all_items_query))
+{
+  $item=$row[$entity];
+  $items[] = $item;
+}
+
+$all_items=json_encode($items);
+return $all_items;
+    
+}
+
 
 ?>
