@@ -1,0 +1,19 @@
+// Example input
+$author_full = 'John William Smith';
+
+// Splitting the full name
+$names = explode(' ', $author_full);
+$first = $names[0];
+$last = $names[count($names) - 1];
+
+// Check if a middle name exists
+if (count($names) > 2) {
+    $middle = implode(' ', array_slice($names, 1, -1));
+} else {
+    $middle = ''; // Set middle name to empty if it doesn't exist
+}
+
+// Output the results
+echo "First Name: $first\n";
+echo "Middle Name: $middle\n";
+echo "Last Name: $last\n";

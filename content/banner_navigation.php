@@ -39,7 +39,7 @@
 
             ?>
 
-            <a href="index.php?page=../admin/addquote">Add Quote</a>
+            <a href="index.php?page=../admin/add_quote">Add Quote</a>
             &nbsp; &nbsp;
             <a href="index.php?page=../admin/logout">Log Out</a>
 
