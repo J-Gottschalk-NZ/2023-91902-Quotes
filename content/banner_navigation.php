@@ -41,7 +41,7 @@
 
             <a href="index.php?page=../admin/add_quote">Add Quote</a>
             &nbsp; &nbsp;
-            <a href="index.php?page=../admin/logout">Log Out</a>
+            <a href="index.php?page=../admin/logout">Log&nbsp;Out</a>
 
             <?php
 

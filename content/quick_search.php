@@ -1,8 +1,8 @@
 <?php
 
 // retrieve search type...
-$search_type = $_POST['search_type'];
-$search_term = $_POST['quick_search'];
+$search_type = clean_input($dbconnect, $_POST['search_type']);
+$search_term = clean_input($dbconnect, $_POST['quick_search']);
 
 // set up searches...
 $quote_search = "q.Quote LIKE '%$search_term%'";
@@ -35,7 +35,6 @@ else  {
     ";}
 
 $heading = "'$search_term' Quotes";
-
 
 include ("results.php");
 

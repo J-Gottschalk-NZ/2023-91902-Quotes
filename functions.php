@@ -1,9 +1,15 @@
 <?php 
 
 // function to 'clean' data
-function test_input($data) {
+function clean_input($dbconnect, $data) {
+	// removes white space
 	$data = trim($data);	
-	$data = htmlspecialchars($data); //  needed for correct special character rendering
+
+	// Renders special characters correctly
+	$data = htmlspecialchars($data); 
+
+	// removes dodgy characters to prevent SQL injections
+	$data = mysqli_real_escape_string($dbconnect, $data);
 	return $data;
 }
 
@@ -31,12 +37,12 @@ JOIN all_subjects s2 ON q.Subject2_ID = s2.Subject_ID
 JOIN all_subjects s3 ON q.Subject3_ID = s3.Subject_ID
 
 ";
+
 // if we have a WHERE condition, add it to the sql
 if($more_condition != null) {
     // add extra string onto find sql
     $find_sql .= $more_condition;
 }
-
 
 $find_query = mysqli_query($dbconnect, $find_sql);
 $find_count = mysqli_num_rows($find_query);	

@@ -16,7 +16,6 @@ $tag_3 = "";
 $tag_1_ID = $tag_2_ID = $tag_3_ID = 0;
 
 // get author full name from database
-// $author_full_sql = "SELECT * FROM author CONCAT('First', ' ', 'Middle', ' ', 'Last') AS Full_Name";
 $author_full_sql = "SELECT *, CONCAT(First, ' ', Middle, ' ', Last)  AS Full_Name FROM author" ;
 $all_authors = autocomplete_list($dbconnect, $author_full_sql, 'Full_Name');
 
