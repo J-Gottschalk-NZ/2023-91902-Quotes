@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 23, 2023 at 07:41 AM
+-- Generation Time: Jun 05, 2023 at 12:21 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 7.3.27
 
@@ -130,7 +130,10 @@ INSERT INTO `all_subjects` (`Subject_ID`, `Subject`) VALUES
 (91, 'woman'),
 (92, 'world'),
 (93, 'writing'),
-(94, 'yourself');
+(94, 'yourself'),
+(95, 'adventure'),
+(96, 'butterflies'),
+(97, 'money');
 
 -- --------------------------------------------------------
 
@@ -200,7 +203,11 @@ INSERT INTO `author` (`Author_ID`, `First`, `Middle`, `Last`) VALUES
 (48, 'J.R.R.', '', 'Tolkien'),
 (49, 'Mark', '', 'Twain'),
 (50, 'Ralph', 'Waldo', 'Emerson'),
-(51, 'Elie', '', 'Wiesel');
+(51, 'Elie', '', 'Wiesel'),
+(52, 'William', 'S', 'Churchill'),
+(53, 'Joseph', 'Barker', 'Baxter'),
+(54, 'Anonymous', '', ''),
+(55, 'Hilde', '', 'Gottschalk');
 
 -- --------------------------------------------------------
 
@@ -323,7 +330,11 @@ INSERT INTO `quotes` (`ID`, `Author_ID`, `Quote`, `Subject1_ID`, `Subject2_ID`, 
 (99, 49, 'Never tell the truth to people who are not worthy of it. ', 86, 62, 62),
 (100, 50, 'For every minute you are angry you lose sixty seconds of happiness. ', 40, 62, 62),
 (101, 50, 'Finish each day and be done with it. You have done what you could. Some blunders and absurdities no doubt crept in; forget them as soon as you can. Tomorrow is a new day. You shall begin it serenely and with too high a spirit to be encumbered with your old nonsense. ', 54, 74, 62),
-(102, 51, 'The opposite of love is not hate, it\'s indifference. The opposite of art is not ugliness, it\'s indifference. The opposite of faith is not heresy, it\'s indifference. And the opposite of life is not death, it\'s indifference. ', 2, 46, 66);
+(102, 51, 'The opposite of love is not hate, it\'s indifference. The opposite of art is not ugliness, it\'s indifference. The opposite of faith is not heresy, it\'s indifference. And the opposite of life is not death, it\'s indifference. ', 2, 46, 66),
+(103, 1, 'That deadline quote', 2, 3, 4),
+(104, 52, 'Success is not final; failure is not fatal: It is the courage to continue that counts.', 47, 80, 19),
+(105, 54, 'Bad spellers of the world untie', 43, 62, 62),
+(106, 55, 'If they give, take.  If they take, scream!', 43, 97, 62);
 
 -- --------------------------------------------------------
 
@@ -380,19 +391,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `all_subjects`
 --
 ALTER TABLE `all_subjects`
-  MODIFY `Subject_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
+  MODIFY `Subject_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
 
 --
 -- AUTO_INCREMENT for table `author`
 --
 ALTER TABLE `author`
-  MODIFY `Author_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `Author_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `quotes`
 --
 ALTER TABLE `quotes`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 
 --
 -- AUTO_INCREMENT for table `users`

@@ -36,6 +36,7 @@ else  {
 
 $heading = "'$search_term' Quotes";
 
+
 include ("results.php");
 
 ?>

@@ -1,29 +1,28 @@
 <?php
 
-if(isset($_REQUEST['submit']))
+// check user is logged on 
+if (isset($_SESSION['admin'])) {
+
+    if(isset($_REQUEST['submit']))
 {
+    // retrieve data from form
+    $quote = $_REQUEST['quote'];
 
-// get quote, author and subjects from from.
-
-// We don't clean the data because we'll use a prepared statement to insert it into the database.
-
-$quote = $_REQUEST['quote'];
-
-$author_full = $_REQUEST['author_full'];
-$subject1 = $_REQUEST['subject1'];
-$subject2 = $_REQUEST['subject2'];
-$subject3 = $_REQUEST['subject3'];
-
-$first = "";
-$middle = "";
-$last = "";
+    $author_full = $_REQUEST['author_full'];
+    $subject1 = $_REQUEST['subject1'];
+    $subject2 = $_REQUEST['subject2'];
+    $subject3 = $_REQUEST['subject3'];
+    
+    $first = "";
+    $middle = "";
+    $last = "";
 
 // Initialise IDs
 $subject_ID_1 = $subject_ID_2 = $subject_ID_3 = $author_ID = "";
 
 // handle blank fields
 if ($author_full == "") {
-    $first = "Anonymous";
+    $author_full = $first = "Anonymous";
 }
 
 if ($subject2 == "") {
@@ -39,25 +38,22 @@ if ($subject3 == "") {
 $subjects = array($subject1, $subject2, $subject3);
 $subject_IDs = array();
 
-// prepare statement to insert subject/s
-$stmt = $dbconnect -> prepare("INSERT INTO `all_subjects` (`Subject_ID`, `Subject`) VALUES (NULL, ?)");
+// statement to insert subject/s
+$stmt = $dbconnect -> prepare("INSERT INTO `all_subjects` (`Subject`) VALUES (?); ");
 
-// Retrieve subject IDs and update "no results" subjects
 foreach ($subjects as $subject) {
+    $subjectID = get_search_ID($dbconnect, $subject);
 
-    // query DB to see if subject already exists
-    $subjectID = get_item_ID($dbconnect, 'all_subjects', 'Subject', $subject, 'Subject_ID');
-
-    if ($subjectID === "no results") {
-        // Insert the subject into the database if it does not exist (using prepared statement)      
+    if ($subjectID == "no results") {
+        
+        // insert the subject
         $stmt -> bind_param("s", $subject);
         $stmt -> execute();
 
-        // Retrieve the auto-generated ID of the inserted subject
+        // retrieve subject ID
         $subjectID = $dbconnect->insert_id;
     }
 
-    // Add the subject ID to the array
     $subject_IDs[] = $subjectID;
 }
 
@@ -66,59 +62,51 @@ $subject_ID_1 = $subject_IDs[0];
 $subject_ID_2 = $subject_IDs[1];
 $subject_ID_3 = $subject_IDs[2];
 
+
 // check to see if author exists
-$find_author_id = "SELECT * FROM author a WHERE CONCAT(a.First, ' ', a.Middle, ' ', a.Last) LIKE '%$author_full%'";
+$find_author_id = "SELECT * FROM author a WHERE 
+CONCAT(a.First, ' ', a.Middle, ' ', a.Last) LIKE '%$author_full%'
+OR CONCAT(a.First, ' ', a.Last) LIKE '%$author_full%'
+";
 $find_author_query = mysqli_query($dbconnect, $find_author_id);
 $find_author_rs = mysqli_fetch_assoc($find_author_query);
 $author_count = mysqli_num_rows($find_author_query);
 
 // retrieve author ID if author exists
-if ($author_count == 1) {
+if ($author_count > 0) {
     $author_ID = $find_author_rs['Author_ID'];
 }
 
-// split author name into first, middle and last and add to DB
 else {
-    // split name if it is not blank
-    if ($first != "Anonymous")
-    {
-    // Splitting the full name
+    // split author name and add to DB
     $names = explode(' ', $author_full);
 
-    // check to see if we have a middle / last name
-
-    // names has more than 1 item, split into first and last
-    // ignore middle for now
     if(count($names) > 1) {
-    $first = $names[0];
-    $last = $names[count($names) - 1];}
-
-    // names has one item, set this as first name 
-    // (ie: no last name)
-    elseif (count($names) == 1) {
         $first = $names[0];
-        }
+        $last = $names[count($names) - 1];}
+
+    elseif (count($names) == 1) {
+        $first = $names[0];}
 
     // Check if a middle name exists
     if (count($names) > 2) {
         $middle = implode(' ', array_slice($names, 1, -1));
     } 
-    }  // end splitting of author name
 
-    $stmt = $dbconnect -> prepare("INSERT INTO `author` (`First`, `Middle`, `Last`) VALUES (?, ?, ?); ");
-    $stmt -> bind_param("sss", $first, $middle, $last);
-    $stmt -> execute();
+// add name to DB
+$stmt = $dbconnect -> prepare("INSERT INTO `author` (`First`, `Middle`, `Last`) VALUES (?, ?, ?); ");
+$stmt -> bind_param("sss", $first, $middle, $last);
+$stmt -> execute();
 
-    $author_ID = $dbconnect -> insert_id;
+$author_ID = $dbconnect -> insert_id;
 
-} // end author else (adding new author to DB)
+} // end name split else
 
-// Once we have all the ID's we need, we can update the quote
+// insert quote
 $stmt = $dbconnect -> prepare("INSERT INTO `quotes` (`Author_ID`, `Quote`, `Subject1_ID`, `Subject2_ID`, `Subject3_ID`) VALUES (?, ?, ?, ?, ?); ");
 $stmt -> bind_param("isiii", $author_ID, $quote, $subject_ID_1, $subject_ID_2, $subject_ID_3);
 $stmt -> execute();
 
-// get id of quote for success page!
 $quote_ID = $dbconnect -> insert_id;
 
 // Close stmt once everything has been inserted
@@ -129,6 +117,16 @@ $sql_conditions = "WHERE ID = $quote_ID";
 
 include("content/results.php");
 
-} // end isset if
+} // end submit button pushed
+
+
+} // end user logged on it
+
+else {
+    $login_error = 'Please login to access this page';
+    header("Location: index.php?page=../admin/login&error=$login_error");
+}
+
+
 
 ?>

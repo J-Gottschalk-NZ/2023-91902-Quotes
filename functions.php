@@ -2,12 +2,8 @@
 
 // function to 'clean' data
 function clean_input($dbconnect, $data) {
-	// removes white space
 	$data = trim($data);	
-
-	// Renders special characters correctly
-	$data = htmlspecialchars($data); 
-
+	$data = htmlspecialchars($data); //  needed for correct special character rendering
 	// removes dodgy characters to prevent SQL injections
 	$data = mysqli_real_escape_string($dbconnect, $data);
 	return $data;
@@ -37,12 +33,12 @@ JOIN all_subjects s2 ON q.Subject2_ID = s2.Subject_ID
 JOIN all_subjects s3 ON q.Subject3_ID = s3.Subject_ID
 
 ";
-
 // if we have a WHERE condition, add it to the sql
 if($more_condition != null) {
     // add extra string onto find sql
     $find_sql .= $more_condition;
 }
+
 
 $find_query = mysqli_query($dbconnect, $find_sql);
 $find_count = mysqli_num_rows($find_query);	
@@ -60,9 +56,10 @@ function get_item_name($dbconnect, $table, $column, $ID)
 	return $find_rs;
 }
 
-function get_item_ID($dbconnect, $table, $search_column, $search_term, $ID_column)
+// get search ID
+function get_search_ID($dbconnect, $search_term)
 {
-	$find_sql = "SELECT * FROM $table WHERE $search_column = '$search_term'";
+	$find_sql = "SELECT * FROM all_subjects WHERE Subject LIKE '$search_term'";
 	$find_query = mysqli_query($dbconnect, $find_sql);
 	$find_rs = mysqli_fetch_assoc($find_query);
 
@@ -70,7 +67,7 @@ function get_item_ID($dbconnect, $table, $search_column, $search_term, $ID_colum
 	$find_count = mysqli_num_rows($find_query);
 
 	if($find_count == 1) {
-	return $find_rs[$ID_column];
+	return $find_rs['Subject_ID'];
 	}
 	else {
 		return "no results";

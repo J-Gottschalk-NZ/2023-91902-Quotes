@@ -20,7 +20,7 @@ elseif ($search_type == "random") {
 
 elseif ($search_type=="author") {
     // retrieve author ID
-    $author_ID = clean_input($dbconnect, $_REQUEST['Author_ID']);
+    $author_ID = $_REQUEST['Author_ID'];
 
     $heading = "";
     $heading_type = "author";
@@ -31,7 +31,7 @@ elseif ($search_type=="author") {
 elseif ($search_type=="subject") {
 
     // retrieve subject
-    $subject_name = clean_input($dbconnect, $_REQUEST['subject_name']);
+    $subject_name = $_REQUEST['subject_name'];
     
     $heading = "";
     $heading_type = "subject";
