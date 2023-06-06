@@ -6,21 +6,22 @@ if (isset($_SESSION['admin'])) {
     if(isset($_REQUEST['submit']))
 {
 
+
+$quote_ID = $_REQUEST['ID'];
+
 // retrieve data from form and get Author / Subject IDs
 // if author / subject don't exist, add them to the DB
 include("process_form.php");
 
 // insert quote
-$stmt = $dbconnect -> prepare("INSERT INTO `quotes` (`Author_ID`, `Quote`, `Subject1_ID`, `Subject2_ID`, `Subject3_ID`) VALUES (?, ?, ?, ?, ?); ");
-$stmt -> bind_param("isiii", $author_ID, $quote, $subject_ID_1, $subject_ID_2, $subject_ID_3);
+$stmt = $dbconnect -> prepare("UPDATE `quotes` SET `Author_ID` = ?, `Quote` = ?, `Subject1_ID` = ?, `Subject2_ID` = ?, `Subject3_ID` = ? WHERE `ID` = ?;");
+$stmt -> bind_param("isiiii", $author_ID, $quote, $subject_ID_1, $subject_ID_2, $subject_ID_3, $quote_ID);
 $stmt -> execute();
-
-$quote_ID = $dbconnect -> insert_id;
 
 // Close stmt once everything has been inserted
 $stmt -> close();
 
-$heading = "Quote Success";
+$heading = "Edite Quote";
 $sql_conditions = "WHERE ID = $quote_ID";
 
 include("content/results.php");

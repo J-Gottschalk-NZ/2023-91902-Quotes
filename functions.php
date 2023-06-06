@@ -18,7 +18,7 @@ $find_sql = "SELECT
 
 q.*,
 a.*,
-CONCAT(a.First, ' ', a.Middle, ' ', a.Last) AS Full_Name,
+CONCAT(a.First, ' ', TRIM(REPLACE(a.Middle, ' ', '')), ' ', a.Last) AS Full_Name,
 
 s1.Subject AS Subject1,
 s2.Subject AS Subject2,

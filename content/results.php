@@ -39,6 +39,7 @@ elseif ($heading_type=="subject") {
 echo $heading;
 
 while($find_rs = mysqli_fetch_assoc($find_query)) {
+    $ID = $find_rs['ID'];
     $quote = $find_rs['Quote'];
 
     // Create full name of author
@@ -93,7 +94,7 @@ while($find_rs = mysqli_fetch_assoc($find_query)) {
 
             ?>
             <div class="tools">
-                <a href="#"><i class="fa fa-edit fa-2x"></i></a> &nbsp; &nbsp;
+                <a href="index.php?page=../admin/editquote&ID=<?php echo $ID; ?>"><i class="fa fa-edit fa-2x"></i></a> &nbsp; &nbsp;
                 <a href="#"><i class="fa fa-trash fa-2x"></i></a>
             </div>
             <?php
