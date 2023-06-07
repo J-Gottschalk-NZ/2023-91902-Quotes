@@ -92,5 +92,21 @@ return $all_items;
     
 }
 
+// Delete Ghost Authors
+function delete_ghost($dbconnect, $authorID)
+{
+	    // see if there are other quotes by that author
+		$check_author_sql = "SELECT * FROM `quotes` WHERE `Author_ID` = $authorID ";
+		$check_author_query = mysqli_query($dbconnect, $check_author_sql);
+	
+		$count_author = mysqli_num_rows($check_author_query);
+	
+		// if there are not quotes associated with the old author, 
+		// we can delete the old author.
+		if ($count_author <= 1) {
+			$delete_ghost = "DELETE FROM `author` WHERE `author`.`Author_ID` = $authorID ";
+			$delete_ghost_query = mysqli_query($dbconnect, $delete_ghost);
+}
+}
 
 ?>

@@ -15,6 +15,7 @@ $edit_query = get_data($dbconnect, "WHERE q.ID = $ID");
 $edit_results_query = $edit_query[0];
 $edit_results_rs = mysqli_fetch_assoc($edit_results_query);
 
+$author_ID = $edit_results_rs['Author_ID'];
 $author_full_name = $edit_results_rs['Full_Name'];
 $quote = $edit_results_rs['Quote'];
 $subject_1 = $edit_results_rs['Subject1'];
@@ -26,7 +27,7 @@ $subject_3 = $edit_results_rs['Subject3'];
 <div class = "admin-form">
     <h1>Edit Quote</h1>
 
-    <form action="index.php?page=../admin/change_quote&ID=<?php echo $ID ?>" method="post">
+    <form action="index.php?page=../admin/change_quote&ID=<?php echo $ID ?>&authorID=<?php echo $author_ID; ?>" method="post">
         <p>
             <textarea name="quote" required><?php echo $quote; ?></textarea>
         </p>

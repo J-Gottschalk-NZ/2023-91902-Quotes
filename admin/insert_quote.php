@@ -20,7 +20,12 @@ $quote_ID = $dbconnect -> insert_id;
 // Close stmt once everything has been inserted
 $stmt -> close();
 
-$heading = "Quote Success";
+
+// Make heading blank here (it is set up in results.php)
+$heading = "";
+$heading_type = "quote_success";
+
+// Retrieve quote and display it.
 $sql_conditions = "WHERE ID = $quote_ID";
 
 include("content/results.php");
