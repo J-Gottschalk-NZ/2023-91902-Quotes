@@ -11,10 +11,8 @@ if (isset($_SESSION['admin'])) {
 $quote_ID = filter_var($_REQUEST['ID'], FILTER_SANITIZE_NUMBER_INT);
 $old_author = filter_var($_REQUEST['authorID'], FILTER_SANITIZE_NUMBER_INT);
     
-// retrieve data from form and get Author / Subject IDs
-// if author / subject don't exist, add them to the DB
-include("process_form.php");
-
+    include("process_form.php");
+    
 // delete author if there are no quotes associated 
 // with that author!
 if ($old_author != $author_ID) {
@@ -26,15 +24,11 @@ $stmt = $dbconnect -> prepare("UPDATE `quotes` SET `Author_ID` = ?, `Quote` = ?,
 $stmt -> bind_param("isiiii", $author_ID, $quote, $subject_ID_1, $subject_ID_2, $subject_ID_3, $quote_ID);
 $stmt -> execute();
 
-// Close stmt once everything has been updated
+// Close stmt once everything has been inserted
 $stmt -> close();
 
-// Set up blank heading and heading type
-// Heading added in 'results.php'
 $heading = "";
-$heading_type = "edit_success";
-
-// retrieve quote and display it
+$heading_type = "edit_successs";
 $sql_conditions = "WHERE ID = $quote_ID";
 
 include("content/results.php");

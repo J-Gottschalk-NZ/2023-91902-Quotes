@@ -65,8 +65,8 @@ elseif ($heading_type == "delete_quote") {
 echo $heading;
 
 while($find_rs = mysqli_fetch_assoc($find_query)) {
-    $ID = $find_rs['ID'];
     $quote = $find_rs['Quote'];
+    $ID = $find_rs['ID'];
 
     // Create full name of author
     $author_full = $find_rs['Full_Name'];

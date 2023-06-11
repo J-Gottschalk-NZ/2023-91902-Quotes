@@ -1,4 +1,5 @@
 <?php
+
 // get all subjects from database
 $all_tags_sql = "SELECT * FROM all_subjects ORDER BY Subject ASC ";
 $all_subjects = autocomplete_list($dbconnect, $all_tags_sql, 'Subject');

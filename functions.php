@@ -18,7 +18,7 @@ $find_sql = "SELECT
 
 q.*,
 a.*,
-CONCAT(a.First, ' ', TRIM(REPLACE(a.Middle, ' ', '')), ' ', a.Last) AS Full_Name,
+CONCAT(a.First, ' ', a.Middle, ' ', a.Last) AS Full_Name,
 
 s1.Subject AS Subject1,
 s2.Subject AS Subject2,
@@ -92,20 +92,21 @@ return $all_items;
     
 }
 
+
 // Delete Ghost Authors
 function delete_ghost($dbconnect, $authorID)
 {
-	    // see if there are other quotes by that author
-		$check_author_sql = "SELECT * FROM `quotes` WHERE `Author_ID` = $authorID ";
-		$check_author_query = mysqli_query($dbconnect, $check_author_sql);
-	
-		$count_author = mysqli_num_rows($check_author_query);
-	
-		// if there are not quotes associated with the old author, 
-		// we can delete the old author.
-		if ($count_author <= 1) {
-			$delete_ghost = "DELETE FROM `author` WHERE `author`.`Author_ID` = $authorID ";
-			$delete_ghost_query = mysqli_query($dbconnect, $delete_ghost);
+	// see if there are other quotes by that author
+	$check_author_sql = "SELECT * FROM `quotes` WHERE `Author_ID` = $authorID ";
+	$check_author_query = mysqli_query($dbconnect, $check_author_sql);
+
+	$count_author = mysqli_num_rows($check_author_query);
+
+	// if there are not quotes associated with the old author, 
+	// we can delete the old author.
+	if ($count_author <= 1) {
+		$delete_ghost = "DELETE FROM `author` WHERE `author`.`Author_ID` = $authorID ";
+		$delete_ghost_query = mysqli_query($dbconnect, $delete_ghost);
 }
 }
 

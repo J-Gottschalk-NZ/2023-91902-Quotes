@@ -3,7 +3,6 @@
 // check user is logged on 
 if (isset($_SESSION['admin'])) {
 
-
 // retrieve quote ID and santise it case someone edits the URL)
 $quote_ID = filter_var($_REQUEST['ID'], FILTER_SANITIZE_NUMBER_INT);
 
@@ -20,7 +19,7 @@ $authorID = $find_rs['Author_ID'];
 
 <p>
     <span class="tag white-tag">
-    <a href="index.php?page=deletequote&ID=<?php echo $quote_ID; ?>&author=<?php echo $author_ID ?>">Yes, Delete it!</a> 
+    <a href="index.php?page=../admin/deletequote&ID=<?php echo $quote_ID; ?>&author=<?php echo $author_ID ?>">Yes, Delete it!</a> 
     </span>
     
     &nbsp;
@@ -30,8 +29,8 @@ $authorID = $find_rs['Author_ID'];
     </span>
 </p>
 
-<?php
 
+<?php
 
 } // end user logged on it
 

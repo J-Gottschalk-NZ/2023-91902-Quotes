@@ -25,11 +25,11 @@ $subject_3 = $edit_results_rs['Subject3'];
  ?>
 
 <div class = "admin-form">
-    <h1>Edit Quote</h1>
+    <h1>Edit a Quote</h1>
 
-    <form action="index.php?page=../admin/change_quote&ID=<?php echo $ID ?>&authorID=<?php echo $author_ID; ?>" method="post">
+    <form action="index.php?page=../admin/change_quote&ID=<?php echo $ID; ?>&authorID=<?php echo $author_ID; ?>" method="post">
         <p>
-            <textarea name="quote" required><?php echo $quote; ?></textarea>
+            <textarea name="quote" placeholder="Quote (Required)" required><?php echo $quote; ?></textarea>
         </p>
 
         <div class="important">
@@ -37,9 +37,7 @@ $subject_3 = $edit_results_rs['Subject3'];
         </div>
 
         <div class="autocomplete">
-        <p><input name="author_full" id="author_full" value="<?php echo str_replace('  ', ' ', $author_full_name); ?>" /></p>
-
-
+            <p><input name="author_full" id="author_full" value ="<?php echo str_replace('  ', ' ', $author_full_name); ?>" /></p>
         </div>
 
         <div class="light_blue">
@@ -49,19 +47,22 @@ $subject_3 = $edit_results_rs['Subject3'];
         <br />
 
         <div class="autocomplete">
-            <input name="subject1" id="subject1" value = "<?php echo $subject_1; ?>" required />
+            <input name="subject1" id="subject1" 
+            value = "<?php echo $subject_1; ?>" required />
         </div>
 
         <br /><br />
 
         <div class="autocomplete">
-            <input name="subject2" id="subject2" value = "<?php echo $subject_2; ?>" />
+            <input name="subject2" id="subject2" 
+            value = "<?php echo $subject_2; ?>" />
         </div>
 
         <br /><br />
 
         <div class="autocomplete">
-            <input name="subject3" id="subject3" value = "<?php echo $subject_3; ?>" />
+            <input name="subject3" id="subject3" 
+            value = "<?php echo $subject_3; ?>" />
         </div>
 
         <br /><br />
@@ -74,8 +75,16 @@ $subject_3 = $edit_results_rs['Subject3'];
     <script>
         <?php include("autocomplete.php"); ?>  
 
-        <?php include("list_arrays.php"); ?>
-      
+        /* Arrays containing lists. */
+        var all_tags = <?php print("$all_subjects")?>;
+        autocomplete(document.getElementById("subject1"), all_tags);
+        autocomplete(document.getElementById("subject2"), all_tags);
+        autocomplete(document.getElementById("subject3"), all_tags);
+
+        var all_author = <?php print("$all_authors") ?>;
+        autocomplete(document.getElementById("author_full"), all_author);
+
+
     </script>
 
 </div>
